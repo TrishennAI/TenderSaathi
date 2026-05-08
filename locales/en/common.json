@@ -1,0 +1,35 @@
+{
+  "appName": "Gem Portal",
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "cases": "My cases",
+    "agent": "Agent inbox",
+    "login": "Sign in",
+    "signup": "Sign up",
+    "logout": "Sign out"
+  },
+  "actions": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "continue": "Continue",
+    "back": "Back",
+    "openWhatsapp": "Open WhatsApp"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "hi": "हिंदी"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "supabaseMissing": "Supabase is not configured yet. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your environment."
+  }
+}

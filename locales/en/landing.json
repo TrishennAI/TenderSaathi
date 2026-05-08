@@ -1,0 +1,21 @@
+{
+  "eyebrow": "India's tender support portal",
+  "headline": "Get expert help with your tender — end to end.",
+  "subhead": "Submit your requirements. A dedicated agent picks up your case, coordinates on WhatsApp, and guides you through documents and deadlines — all in one clear workflow.",
+  "steps": [
+    {
+      "title": "Sign up in minutes",
+      "body": "Create your account and open a case with a short summary of what you need."
+    },
+    {
+      "title": "Agent picks it up",
+      "body": "An experienced agent reviews your request, accepts the case, and continues the conversation on WhatsApp."
+    },
+    {
+      "title": "Track every milestone",
+      "body": "See status, document checklist, and next steps in your dashboard — so nothing slips through the cracks."
+    }
+  ],
+  "scrollHint": "How it works — scroll down",
+  "footer": "Built for Indian MSMEs."
+}

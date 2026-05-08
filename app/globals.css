@@ -1,26 +1,284 @@
 @import "tailwindcss";
 
+/* Light theme: vivid teal + warm accent, visible depth — not flat gray-beige */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e4f0ec;
+  --foreground: #042f2e;
+  --muted: #2d4a45;
+  --muted-2: #4a6b64;
+  --card: #ffffff;
+  --card-2: #c8e4dc;
+  --border: #7ebfb2;
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-foreground: #ffffff;
+  --accent: #ea580c;
+  --accent-foreground: #ffffff;
+  --success: #047857;
+  --warning: #b45309;
+  --destructive: #c41c1c;
+  --ring: #14b8a6;
+}
+
+.dark {
+  --background: #0a0f18;
+  --foreground: #e8edf5;
+  --muted: #9aa5b8;
+  --muted-2: #6b7588;
+  --card: #121a28;
+  --card-2: #0f1624;
+  --border: #243044;
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --primary-foreground: #042f2e;
+  --accent: #fb923c;
+  --accent-foreground: #2a1407;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --destructive: #f87171;
+  --ring: #2dd4bf;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 17px;
+}
+
+html:not(.dark) body {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 130% 90% at 50% -25%, rgba(13, 148, 136, 0.35), transparent 55%),
+    radial-gradient(ellipse 70% 55% at 105% 5%, rgba(234, 88, 12, 0.14), transparent 50%),
+    radial-gradient(ellipse 55% 45% at -5% 85%, rgba(13, 148, 136, 0.12), transparent 50%),
+    linear-gradient(168deg, #e8f5f2 0%, #dceee9 38%, #e6f3ef 100%);
+}
+
+.dark body {
+  background: var(--background);
+  background-image: none;
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-hi-body {
+  font-family: var(--font-noto-devanagari), var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Hero: mesh + drifting wash */
+@media (prefers-reduced-motion: no-preference) {
+  .landing-hero-mesh {
+    background-image:
+      radial-gradient(circle at center, rgba(13, 148, 136, 0.09) 1px, transparent 1px),
+      radial-gradient(circle at center, rgba(234, 88, 12, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px, 48px 48px;
+    background-position: 0 0, 24px 24px;
+    animation: meshDrift 28s linear infinite;
+    opacity: 0.85;
+  }
+
+  .landing-hero-gradient {
+    background: linear-gradient(
+      125deg,
+      rgba(13, 148, 136, 0.28) 0%,
+      rgba(234, 88, 12, 0.12) 32%,
+      rgba(13, 148, 136, 0.2) 64%,
+      rgba(255, 255, 255, 0.35) 100%
+    );
+    background-size: 220% 220%;
+    animation: landingGradient 14s ease-in-out infinite alternate;
+  }
+
+  .landing-hero-ring {
+    animation: ringPulse 10s ease-in-out infinite;
+  }
+
+  .landing-card {
+    transition:
+      box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.35s ease;
+  }
+
+  .landing-card:hover {
+    box-shadow:
+      0 24px 48px -20px rgba(4, 47, 46, 0.22),
+      0 0 0 1px color-mix(in srgb, var(--primary) 35%, transparent);
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  }
+
+  .landing-cta-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 55%, #115e59 100%);
+    background-size: 160% 160%;
+    animation: ctaShimmer 5s ease-in-out infinite;
+  }
+
+  .landing-cta-secondary {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-mesh {
+    background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.12) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+  }
+
+  .landing-hero-gradient {
+    background: linear-gradient(180deg, rgba(13, 148, 136, 0.18) 0%, transparent 100%);
+  }
+
+  .landing-headline {
+    color: var(--foreground);
+    -webkit-text-fill-color: var(--foreground);
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+  }
+
+  .landing-cta-primary {
+    background: var(--primary);
+  }
+}
+
+.dark .landing-hero-mesh {
+  opacity: 0.35;
+  background-image: radial-gradient(circle at center, rgba(45, 212, 191, 0.12) 1px, transparent 1px);
+  background-size: 44px 44px;
+  animation: none;
+}
+
+.dark .landing-headline {
+  color: var(--foreground);
+  -webkit-text-fill-color: var(--foreground);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  animation: none;
+}
+
+.dark .landing-hero-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(45, 212, 191, 0.12) 0%,
+    transparent 100%
+  );
+}
+
+/* Light theme: solid headline (no gradient clip) — reliable with long Devanagari lines */
+html:not(.dark) .landing-headline {
+  color: var(--foreground);
+  -webkit-text-fill-color: var(--foreground);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dark .landing-hero-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(45, 212, 191, 0.16) 0%,
+      rgba(251, 146, 60, 0.08) 50%,
+      rgba(45, 212, 191, 0.12) 100%
+    );
+    background-size: 200% 200%;
+    animation: landingGradient 20s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes meshDrift {
+  0% {
+    background-position: 0 0, 24px 24px;
+  }
+  100% {
+    background-position: 48px 48px, 72px 72px;
+  }
+}
+
+@keyframes landingGradient {
+  0% {
+    background-position: 0% 35%;
+  }
+  100% {
+    background-position: 100% 65%;
+  }
+}
+
+/* Must keep translate(-50%,-50%) — keyframes replace Tailwind transform; losing it breaks ring position in light mode */
+@keyframes ringPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+    opacity: 0.55;
+  }
+}
+
+@keyframes ctaShimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 280ms ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

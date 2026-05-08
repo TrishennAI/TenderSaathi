@@ -1,0 +1,20 @@
+-- Helper SQL to seed the single agent.
+-- Run AFTER the agent's auth user has been created in Supabase Auth (e.g. via dashboard).
+-- 1. Create the agent's auth.user via Supabase Studio > Authentication > Add user.
+-- 2. Then run the snippet below, replacing the email and WhatsApp number.
+
+-- Example (uncomment and edit before running):
+-- with auth_user as (
+--   select id from auth.users where email = 'agent@example.com' limit 1
+-- ), upd as (
+--   update public.profiles
+--      set role = 'agent', full_name = 'Primary Agent'
+--    where id in (select id from auth_user)
+--    returning id
+-- )
+-- insert into public.agents (user_id, display_name, whatsapp_phone_e164, is_active)
+-- select id, 'Primary Agent', '+919999999999', true from upd
+-- on conflict (user_id) do update set
+--   display_name = excluded.display_name,
+--   whatsapp_phone_e164 = excluded.whatsapp_phone_e164,
+--   is_active = true;

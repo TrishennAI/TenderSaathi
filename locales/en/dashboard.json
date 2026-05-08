@@ -1,0 +1,87 @@
+{
+  "user": {
+    "title": "Your dashboard",
+    "subtitle": "Track your tender support cases.",
+    "newCase": "Start a new case",
+    "noCases": "You have no cases yet.",
+    "openCase": "Open case"
+  },
+  "agent": {
+    "title": "Agent inbox",
+    "subtitle": "Cases assigned to you.",
+    "queue": "New / awaiting action",
+    "active": "Active",
+    "closed": "Closed",
+    "emptySection": "Nothing here yet."
+  },
+  "case": {
+    "newTitle": "New case",
+    "newSubtitle": "Tell us briefly what tender support you need. We will continue on WhatsApp once your agent accepts.",
+    "fields": {
+      "title": "Title",
+      "summary": "What do you need help with?",
+      "summaryPlaceholder": "Describe the tender, sector, deadline, and any specifics."
+    },
+    "create": "Create case",
+    "viewTitle": "Case details",
+    "agentSection": "Agent",
+    "noAgentYet": "No agent assigned yet.",
+    "whatsapp": {
+      "title": "Continue on WhatsApp",
+      "body": "Documents, clarifications, and your payment screenshot must be sent on WhatsApp. The portal tracks status only."
+    },
+    "documents": {
+      "title": "Documents checklist",
+      "agentNote": "Your agent will list the documents required here. Send each one on WhatsApp."
+    },
+    "payment": {
+      "title": "Payment",
+      "amount": "Amount",
+      "instructions": "Pay via UPI using the QR below, then send the screenshot to your agent on WhatsApp.",
+      "qrAlt": "UPI payment QR",
+      "waitingApproval": "Waiting for agent to approve documents."
+    },
+    "timeline": "Timeline",
+    "noDocuments": "No documents listed yet.",
+    "noWhatsapp": "No agent WhatsApp number configured.",
+    "paymentStatus": "Status"
+  },
+  "paymentRecordStatus": {
+    "awaiting_payment": "Awaiting payment proof",
+    "pending_verification": "Pending verification",
+    "verified": "Verified",
+    "rejected": "Rejected"
+  },
+  "agentPanel": {
+    "title": "Agent controls",
+    "subtitle": "Only visible to agents. Move the case through each stage.",
+    "onHold": "On hold",
+    "rejectCase": "Reject case",
+    "checklistTitle": "Document checklist",
+    "removeRow": "Remove",
+    "addPlaceholder": "Add a document requirement",
+    "add": "Add",
+    "internalNotes": "Agent notes (internal)",
+    "paymentTitle": "Payment",
+    "paymentMeta": "₹{amount} · status: {status}",
+    "markVerified": "Mark verified",
+    "pendingReview": "Pending review",
+    "rejectPayment": "Reject payment",
+    "rejectReasonPrompt": "Reason for rejecting this payment proof?",
+    "genericError": "Something went wrong"
+  },
+  "status": {
+    "submitted": "Submitted",
+    "agent_assigned": "Agent assigned",
+    "whatsapp_active": "WhatsApp active",
+    "documents_requested": "Documents requested",
+    "documents_under_review": "Documents under review",
+    "documents_approved": "Documents approved",
+    "awaiting_payment": "Awaiting payment",
+    "payment_pending_verification": "Payment pending verification",
+    "in_progress": "In progress",
+    "completed": "Completed",
+    "rejected": "Rejected",
+    "on_hold": "On hold"
+  }
+}

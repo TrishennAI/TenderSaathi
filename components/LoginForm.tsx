@@ -1,0 +1,108 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useTransition } from "react";
+
+import { AuthDivider, GoogleSignInButton } from "@/components/GoogleSignInButton";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/env";
+
+type Labels = {
+  divider: string;
+  google: string;
+  email: string;
+  password: string;
+  submit: string;
+  oauthError: string;
+  genericError: string;
+  supabaseMissing: string;
+};
+
+export function LoginForm({ labels }: { labels: Labels }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") ?? "/dashboard";
+  const oauthFailed = searchParams.get("error") === "oauth";
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+
+  function handleSubmit(form: FormData) {
+    setError(null);
+    if (!isSupabaseConfigured()) {
+      setError(labels.supabaseMissing);
+      return;
+    }
+    startTransition(async () => {
+      const supabase = createSupabaseBrowserClient();
+      const { error: err } = await supabase.auth.signInWithPassword({
+        email: String(form.get("email") ?? ""),
+        password: String(form.get("password") ?? ""),
+      });
+      if (err) {
+        setError(err.message || labels.genericError);
+        return;
+      }
+      router.replace(next);
+      router.refresh();
+    });
+  }
+
+  return (
+    <div className="mt-6 flex flex-col gap-4">
+      <GoogleSignInButton
+        next={next}
+        label={labels.google}
+        errorLabel={labels.supabaseMissing}
+      />
+      <AuthDivider label={labels.divider} />
+      <form action={handleSubmit} className="flex flex-col gap-4">
+      <Field label={labels.email} name="email" type="email" autoComplete="email" required />
+      <Field label={labels.password} name="password" type="password" autoComplete="current-password" required />
+      {oauthFailed && (
+        <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {labels.oauthError}
+        </p>
+      )}
+      {error && (
+        <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {error}
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={pending}
+        className="mt-1 inline-flex h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover disabled:opacity-60"
+      >
+        {pending ? "…" : labels.submit}
+      </button>
+      </form>
+    </div>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  required,
+  autoComplete,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+  autoComplete?: string;
+}) {
+  return (
+    <label className="flex flex-col gap-1 text-sm">
+      <span className="font-medium">{label}</span>
+      <input
+        name={name}
+        type={type}
+        required={required}
+        autoComplete={autoComplete}
+        className="h-11 rounded-md border border-border bg-background px-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
+      />
+    </label>
+  );
+}

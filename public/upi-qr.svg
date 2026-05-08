@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220" role="img" aria-label="UPI payment QR placeholder">
+  <rect width="220" height="220" fill="#ffffff"/>
+  <g fill="#0d9488">
+    <rect x="10" y="10" width="60" height="60" rx="6"/>
+    <rect x="150" y="10" width="60" height="60" rx="6"/>
+    <rect x="10" y="150" width="60" height="60" rx="6"/>
+  </g>
+  <g fill="#ffffff">
+    <rect x="22" y="22" width="36" height="36" rx="3"/>
+    <rect x="162" y="22" width="36" height="36" rx="3"/>
+    <rect x="22" y="162" width="36" height="36" rx="3"/>
+  </g>
+  <g fill="#0d9488">
+    <rect x="32" y="32" width="16" height="16"/>
+    <rect x="172" y="32" width="16" height="16"/>
+    <rect x="32" y="172" width="16" height="16"/>
+  </g>
+  <g fill="#0f172a">
+    <rect x="84" y="80" width="12" height="12"/>
+    <rect x="100" y="80" width="12" height="12"/>
+    <rect x="116" y="80" width="12" height="12"/>
+    <rect x="84" y="96" width="12" height="12"/>
+    <rect x="116" y="96" width="12" height="12"/>
+    <rect x="84" y="112" width="12" height="12"/>
+    <rect x="100" y="112" width="12" height="12"/>
+    <rect x="116" y="112" width="12" height="12"/>
+    <rect x="100" y="128" width="12" height="12"/>
+  </g>
+  <text x="110" y="200" text-anchor="middle" font-family="system-ui" font-size="12" fill="#64748b">UPI QR placeholder</text>
+</svg>

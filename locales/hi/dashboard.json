@@ -1,0 +1,87 @@
+{
+  "user": {
+    "title": "आपका डैशबोर्ड",
+    "subtitle": "अपने टेंडर सहायता केस ट्रैक करें।",
+    "newCase": "नया केस शुरू करें",
+    "noCases": "अभी आपके पास कोई केस नहीं है।",
+    "openCase": "केस खोलें"
+  },
+  "agent": {
+    "title": "एजेंट इनबॉक्स",
+    "subtitle": "आपको असाइन किए गए केस।",
+    "queue": "नए / कार्रवाई की प्रतीक्षा में",
+    "active": "सक्रिय",
+    "closed": "बंद",
+    "emptySection": "यहाँ अभी कुछ नहीं है।"
+  },
+  "case": {
+    "newTitle": "नया केस",
+    "newSubtitle": "संक्षेप में बताएं कि आपको किस तरह की टेंडर सहायता चाहिए। एजेंट के स्वीकार करने पर हम WhatsApp पर आगे बात करेंगे।",
+    "fields": {
+      "title": "शीर्षक",
+      "summary": "आपको किसमें मदद चाहिए?",
+      "summaryPlaceholder": "टेंडर, क्षेत्र, अंतिम तिथि और विशेष आवश्यकताएँ बताएं।"
+    },
+    "create": "केस बनाएं",
+    "viewTitle": "केस विवरण",
+    "agentSection": "एजेंट",
+    "noAgentYet": "अभी कोई एजेंट असाइन नहीं किया गया।",
+    "whatsapp": {
+      "title": "WhatsApp पर जारी रखें",
+      "body": "दस्तावेज़, स्पष्टीकरण और भुगतान का स्क्रीनशॉट WhatsApp पर ही भेजें। पोर्टल केवल स्थिति ट्रैक करता है।"
+    },
+    "documents": {
+      "title": "दस्तावेज़ चेकलिस्ट",
+      "agentNote": "आपका एजेंट यहाँ आवश्यक दस्तावेज़ सूचीबद्ध करेगा। प्रत्येक को WhatsApp पर भेजें।"
+    },
+    "payment": {
+      "title": "भुगतान",
+      "amount": "राशि",
+      "instructions": "नीचे दिए गए QR से UPI द्वारा भुगतान करें, फिर WhatsApp पर एजेंट को स्क्रीनशॉट भेजें।",
+      "qrAlt": "UPI भुगतान QR",
+      "waitingApproval": "एजेंट द्वारा दस्तावेज़ अनुमोदन की प्रतीक्षा है।"
+    },
+    "timeline": "टाइमलाइन",
+    "noDocuments": "अभी कोई दस्तावेज़ सूचीबद्ध नहीं है।",
+    "noWhatsapp": "एजेंट का WhatsApp नंबर कॉन्फ़िगर नहीं है।",
+    "paymentStatus": "स्थिति"
+  },
+  "paymentRecordStatus": {
+    "awaiting_payment": "भुगतान प्रमाण की प्रतीक्षा",
+    "pending_verification": "सत्यापन लंबित",
+    "verified": "सत्यापित",
+    "rejected": "अस्वीकृत"
+  },
+  "agentPanel": {
+    "title": "एजेंट नियंत्रण",
+    "subtitle": "केवल एजेंट दिखाई देता है। केस को चरणों में आगे बढ़ाएँ।",
+    "onHold": "होल्ड पर",
+    "rejectCase": "केस अस्वीकार करें",
+    "checklistTitle": "दस्तावेज़ चेकलिस्ट",
+    "removeRow": "हटाएँ",
+    "addPlaceholder": "दस्तावेज़ की आवश्यकता जोड़ें",
+    "add": "जोड़ें",
+    "internalNotes": "एजेंट नोट्स (आंतरिक)",
+    "paymentTitle": "भुगतान",
+    "paymentMeta": "₹{amount} · स्थिति: {status}",
+    "markVerified": "सत्यापित चिह्नित करें",
+    "pendingReview": "समीक्षा लंबित",
+    "rejectPayment": "भुगतान अस्वीकार",
+    "rejectReasonPrompt": "भुगतान प्रमाण अस्वीकार करने का कारण?",
+    "genericError": "कुछ गलत हो गया"
+  },
+  "status": {
+    "submitted": "सबमिट किया गया",
+    "agent_assigned": "एजेंट असाइन किया गया",
+    "whatsapp_active": "WhatsApp सक्रिय",
+    "documents_requested": "दस्तावेज़ अनुरोधित",
+    "documents_under_review": "दस्तावेज़ समीक्षा में",
+    "documents_approved": "दस्तावेज़ अनुमोदित",
+    "awaiting_payment": "भुगतान की प्रतीक्षा",
+    "payment_pending_verification": "भुगतान सत्यापन की प्रतीक्षा",
+    "in_progress": "प्रगति में",
+    "completed": "पूर्ण",
+    "rejected": "अस्वीकृत",
+    "on_hold": "होल्ड पर"
+  }
+}
