@@ -15,12 +15,40 @@ async function createCaseAction(formData: FormData) {
   const { data, error } = await supabase
     .from("cases")
     .insert({ user_id: profile.id, title, summary: summary || null })
-    .select("id")
+    .select("id, agent_id")
     .single();
   if (error || !data) {
     throw new Error(error?.message ?? "Failed to create case");
   }
-  redirect(`/cases/${data.id}`);
+  
+  // Get agent's WhatsApp number if agent is assigned
+  let whatsappUrl = `/cases/${data.id}`; // Fallback to case page
+  
+  if (data.agent_id) {
+    const { data: agent } = await supabase
+      .from("agents")
+      .select("whatsapp_phone_e164")
+      .eq("id", data.agent_id)
+      .single();
+    
+    if (agent?.whatsapp_phone_e164) {
+      // Build WhatsApp URL with pre-filled message
+      const message = `Hi! I just created a new case on Tender Sathii.
+
+*Case Title:* ${title}
+
+${summary ? `*Details:* ${summary}` : ''}
+
+*Case ID:* ${data.id}
+
+I'm looking forward to working with you!`;
+      
+      const phoneDigits = agent.whatsapp_phone_e164.replace(/[^\d]/g, "");
+      whatsappUrl = `https://wa.me/${phoneDigits}?text=${encodeURIComponent(message)}`;
+    }
+  }
+  
+  redirect(whatsappUrl);
 }
 
 export default async function NewCasePage() {
