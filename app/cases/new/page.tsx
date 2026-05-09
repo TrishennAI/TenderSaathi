@@ -7,33 +7,26 @@ import { requireUser } from "@/lib/cases";
 async function createCaseAction(formData: FormData) {
   "use server";
   const { supabase, profile } = await requireUser();
+  const { env } = await import("@/lib/env");
+  
   const title = String(formData.get("title") ?? "").trim();
   const summary = String(formData.get("summary") ?? "").trim();
   if (!title) {
     return;
   }
+  
   const { data, error } = await supabase
     .from("cases")
     .insert({ user_id: profile.id, title, summary: summary || null })
-    .select("id, agent_id")
+    .select("id")
     .single();
+  
   if (error || !data) {
     throw new Error(error?.message ?? "Failed to create case");
   }
   
-  // Get agent's WhatsApp number if agent is assigned
-  let whatsappUrl = `/cases/${data.id}`; // Fallback to case page
-  
-  if (data.agent_id) {
-    const { data: agent } = await supabase
-      .from("agents")
-      .select("whatsapp_phone_e164")
-      .eq("id", data.agent_id)
-      .single();
-    
-    if (agent?.whatsapp_phone_e164) {
-      // Build WhatsApp URL with pre-filled message
-      const message = `Hi! I just created a new case on Tender Sathii.
+  // Build WhatsApp message with case details
+  const message = `Hi! I just created a new case on Tender Sathii.
 
 *Case Title:* ${title}
 
@@ -42,11 +35,10 @@ ${summary ? `*Details:* ${summary}` : ''}
 *Case ID:* ${data.id}
 
 I'm looking forward to working with you!`;
-      
-      const phoneDigits = agent.whatsapp_phone_e164.replace(/[^\d]/g, "");
-      whatsappUrl = `https://wa.me/${phoneDigits}?text=${encodeURIComponent(message)}`;
-    }
-  }
+  
+  // Redirect to WhatsApp with pre-filled message
+  const phoneDigits = env.agentWhatsappNumber.replace(/[^\d]/g, "");
+  const whatsappUrl = `https://wa.me/${phoneDigits}?text=${encodeURIComponent(message)}`;
   
   redirect(whatsappUrl);
 }
