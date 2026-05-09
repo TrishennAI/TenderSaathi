@@ -16,7 +16,7 @@
   },
   "case": {
     "newTitle": "New case",
-    "newSubtitle": "Tell us briefly what tender support you need. We will continue on WhatsApp once your agent accepts.",
+    "newSubtitle": "Tell us briefly what tender support you need. We will continue on WhatsApp once our agent accepts.",
     "fields": {
       "title": "Title",
       "summary": "What do you need help with?",
