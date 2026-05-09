@@ -13,14 +13,36 @@ export async function requireUser() {
   if (!user) {
     redirect("/login");
   }
-  const { data: profile } = await supabase
+  
+  let { data: profile } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .maybeSingle<Profile>();
+  
+  // If profile doesn't exist, create it (fallback for trigger failure)
   if (!profile) {
-    redirect("/login");
+    const { data: newProfile, error } = await supabase
+      .from("profiles")
+      .insert({
+        id: user.id,
+        role: "user",
+        full_name: user.user_metadata?.full_name || null,
+        phone: user.user_metadata?.phone || null,
+        preferred_locale: "en",
+      })
+      .select()
+      .single<Profile>();
+    
+    if (error || !newProfile) {
+      // If we still can't create profile, sign out and redirect
+      await supabase.auth.signOut();
+      redirect("/login?error=profile_creation_failed");
+    }
+    
+    profile = newProfile;
   }
+  
   return { supabase, user, profile };
 }
 
