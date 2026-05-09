@@ -72,8 +72,8 @@ npm install
 cp .env.example .env.local
 
 # Edit .env.local with your Supabase credentials
-# NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
-# NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR-PUBLIC-ANON-KEY
+# TS_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+# TS_SUPABASE_ANON_KEY=YOUR-PUBLIC-ANON-KEY
 ```
 
 ### Database Setup
@@ -121,12 +121,12 @@ TenderSaathi/
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | ✅ |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key | ✅ |
-| `NEXT_PUBLIC_AGENT_WHATSAPP_FALLBACK` | Fallback WhatsApp (E.164) | ✅ |
-| `NEXT_PUBLIC_APP_NAME` | App display name | ⚠️ |
-| `NEXT_PUBLIC_PAYMENT_AMOUNT_INR` | Payment amount | ⚠️ |
-| `NEXT_PUBLIC_PAYMENT_QR_PATH` | UPI QR image path | ⚠️ |
+| `TS_SUPABASE_URL` | Supabase project URL | ✅ |
+| `TS_SUPABASE_ANON_KEY` | Supabase anon key | ✅ |
+| `TS_AGENT_WHATSAPP_NUMBER` | Agent WhatsApp (E.164) | ✅ |
+| `TS_PAYMENT_AMOUNT` | Payment amount in INR | ⚠️ |
+| `TS_PAYMENT_QR_IMAGE_PATH` | UPI QR image path | ⚠️ |
+
 
 ---
 

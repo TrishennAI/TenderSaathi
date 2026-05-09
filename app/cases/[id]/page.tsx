@@ -42,7 +42,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
   ]);
 
   const isAgent = profile.role === "agent";
-  const phone = agent?.whatsapp_phone_e164 ?? env.agentWhatsappFallback;
+  const phone = agent?.whatsapp_phone_e164 ?? env.agentWhatsappNumber;
   const whatsappUrl = phone
     ? buildWhatsappUrl({
         phoneE164: phone,
@@ -151,7 +151,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
                 <div className="mt-4 flex flex-col items-start gap-3">
                   <div className="rounded-xl border border-border bg-card-2 p-4">
                     <Image
-                      src={env.paymentQrPath}
+                      src={env.paymentQrImagePath}
                       alt={t.dashboard.case.payment.qrAlt}
                       width={220}
                       height={220}
