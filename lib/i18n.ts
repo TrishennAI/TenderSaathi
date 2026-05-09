@@ -11,7 +11,7 @@ import hiLanding from "@/locales/hi/landing.json";
 
 import type { Locale } from "@/lib/types";
 
-export const LOCALE_COOKIE = "gp_locale";
+export const LOCALE_COOKIE = "ts_locale";
 export const SUPPORTED_LOCALES: Locale[] = ["en", "hi"];
 
 const dictionaries = {

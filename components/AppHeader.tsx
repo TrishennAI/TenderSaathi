@@ -17,15 +17,15 @@ type Props = {
 export function AppHeader({ locale, t, authed, role }: Props) {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3.5">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-1.5 px-3 py-3.5 sm:gap-2 sm:px-4">
         <Link
           href="/"
-          className="flex items-center gap-2.5 text-base font-semibold motion-safe:active:scale-[0.97] motion-safe:transition-transform motion-safe:duration-200 md:text-lg"
+          className="flex min-w-0 shrink items-center gap-1.5 text-sm font-semibold motion-safe:active:scale-[0.97] motion-safe:transition-transform motion-safe:duration-200 sm:gap-2 sm:text-base md:text-lg"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground shadow-sm">
-            GP
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-xs font-bold text-primary-foreground shadow-sm sm:h-9 sm:w-9 sm:text-sm">
+            TS
           </span>
-          <span>{env.appName || t.common.appName}</span>
+          <span className="truncate">Tender Sathii</span>
         </Link>
 
         {authed ? (
@@ -56,7 +56,7 @@ export function AppHeader({ locale, t, authed, role }: Props) {
           </nav>
         ) : null}
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
           <LocaleSwitcher locale={locale} labels={{ en: t.common.language.en, hi: t.common.language.hi }} />
           <ThemeToggle label={t.common.theme.toggle} />
           {authed ? (
@@ -65,13 +65,13 @@ export function AppHeader({ locale, t, authed, role }: Props) {
             <>
               <Link
                 href="/login"
-                className="rounded-full px-4 py-2 text-base font-medium text-foreground motion-safe:active:scale-[0.97] motion-safe:transition-transform motion-safe:duration-200 hover:bg-card-2"
+                className="rounded-full px-2.5 py-1.5 text-xs font-medium text-foreground motion-safe:active:scale-[0.97] motion-safe:transition-transform motion-safe:duration-200 hover:bg-card-2 sm:px-3 sm:text-sm md:px-4 md:py-2 md:text-base"
               >
                 {t.common.nav.login}
               </Link>
               <Link
                 href="/signup"
-                className="rounded-full bg-primary px-4 py-2 text-base font-semibold text-primary-foreground shadow-sm motion-safe:active:scale-[0.96] motion-safe:transition-transform motion-safe:duration-200 hover:bg-primary-hover"
+                className="rounded-full bg-primary px-2.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm motion-safe:active:scale-[0.96] motion-safe:transition-transform motion-safe:duration-200 hover:bg-primary-hover sm:px-3 sm:text-sm md:px-4 md:py-2 md:text-base"
               >
                 {t.common.nav.signup}
               </Link>

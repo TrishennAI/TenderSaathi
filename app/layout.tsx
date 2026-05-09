@@ -4,7 +4,6 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { Providers } from "@/components/Providers";
 import { getLocale } from "@/lib/i18n";
-import { env } from "@/lib/env";
 
 import "./globals.css";
 
@@ -25,7 +24,7 @@ const notoDevanagari = Noto_Sans_Devanagari({
 });
 
 export const metadata: Metadata = {
-  title: `${env.appName} — Tender support portal`,
+  title: "Tender Sathii — Tender support portal",
   description: "Get expert help with your tender filings end to end.",
 };
 

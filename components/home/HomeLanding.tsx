@@ -15,14 +15,12 @@ export function HomeLanding({
   locale,
   landing,
   nav,
-  appName,
   authed,
   role,
 }: {
   locale: Locale;
   landing: Landing;
   nav: { signup: string; login: string; dashboard: string };
-  appName: string;
   authed: boolean;
   role?: "user" | "agent";
 }) {
@@ -138,7 +136,7 @@ export function HomeLanding({
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...spring, delay: 0.1 }}
-              className="landing-headline text-[2.1rem] font-bold leading-[1.12] tracking-tight md:text-5xl lg:text-[3.35rem]"
+              className="landing-headline text-[2.1rem] font-bold leading-[1.2] tracking-tight md:text-5xl md:leading-[1.12] lg:text-[3.35rem]"
             >
               {landing.headline}
             </motion.h1>
@@ -155,7 +153,7 @@ export function HomeLanding({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...spring, delay: 0.26 }}
-              className="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5"
+              className="mt-11 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5"
             >
               <motion.div
                 whileHover={reduce ? undefined : { scale: 1.03, y: -2 }}
@@ -165,7 +163,7 @@ export function HomeLanding({
               >
                 <Link
                   href={ctaHref}
-                  className="landing-cta-primary inline-flex w-full items-center justify-center rounded-full px-9 py-4 text-base font-semibold text-primary-foreground shadow-[0_12px_40px_-12px_rgba(13,148,136,0.55)] sm:w-auto"
+                  className="landing-cta-primary inline-flex w-full items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-[0_12px_40px_-12px_rgba(13,148,136,0.55)] sm:w-auto sm:px-9 sm:py-4"
                 >
                   {ctaLabel}
                 </Link>
@@ -179,7 +177,7 @@ export function HomeLanding({
                 >
                   <Link
                     href="/login"
-                    className="landing-cta-secondary inline-flex w-full items-center justify-center rounded-full border-2 border-primary/40 bg-card/95 px-9 py-4 text-base font-semibold text-foreground shadow-md backdrop-blur-sm dark:border-border sm:w-auto"
+                    className="landing-cta-secondary inline-flex w-full items-center justify-center rounded-full border-2 border-primary/40 bg-card/95 px-8 py-3.5 text-base font-semibold text-foreground shadow-md backdrop-blur-sm dark:border-border sm:w-auto sm:px-9 sm:py-4"
                   >
                     {nav.login}
                   </Link>
@@ -284,8 +282,8 @@ export function HomeLanding({
         transition={springSoft}
       >
         <div className="mx-auto max-w-6xl text-center">
-          <p>
-            &copy; {new Date().getFullYear()} {appName}. {landing.footer}
+          <p suppressHydrationWarning>
+            &copy; {new Date().getFullYear()} Tender Sathii. {landing.footer}
           </p>
         </div>
       </motion.footer>

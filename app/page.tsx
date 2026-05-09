@@ -1,6 +1,5 @@
 import { AppHeader } from "@/components/AppHeader";
 import { HomeLanding } from "@/components/home/HomeLanding";
-import { env } from "@/lib/env";
 import { getDictionary } from "@/lib/i18n";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/env";
@@ -36,7 +35,6 @@ export default async function Home() {
           login: t.common.nav.login,
           dashboard: t.common.nav.dashboard,
         }}
-        appName={env.appName || t.common.appName}
         authed={authed}
         role={role}
       />
