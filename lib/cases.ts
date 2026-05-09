@@ -22,25 +22,34 @@ export async function requireUser() {
   
   // If profile doesn't exist, create it (fallback for trigger failure)
   if (!profile) {
+    console.log("Profile missing for user:", user.id, "metadata:", user.user_metadata);
+    
     const { data: newProfile, error } = await supabase
       .from("profiles")
       .insert({
         id: user.id,
         role: "user",
-        full_name: user.user_metadata?.full_name || null,
+        full_name: user.user_metadata?.full_name || user.user_metadata?.name || null,
         phone: user.user_metadata?.phone || null,
+        business_name: user.user_metadata?.business_name || null,
         preferred_locale: "en",
       })
       .select()
       .single<Profile>();
     
-    if (error || !newProfile) {
-      // If we still can't create profile, sign out and redirect
-      await supabase.auth.signOut();
-      redirect("/login?error=profile_creation_failed");
+    if (error) {
+      console.error("Failed to create profile:", error);
+      // Instead of signing out, redirect to a special error page or login with error
+      redirect("/login?error=profile_creation_failed&details=" + encodeURIComponent(error.message));
+    }
+    
+    if (!newProfile) {
+      console.error("Profile creation returned no data");
+      redirect("/login?error=profile_creation_empty");
     }
     
     profile = newProfile;
+    console.log("Created profile for user:", user.id);
   }
   
   return { supabase, user, profile };

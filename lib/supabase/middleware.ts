@@ -66,7 +66,10 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (user && (pathname === "/login" || pathname === "/signup")) {
+  // Allow access to login/signup pages even when logged in if there's an error
+  // (e.g., profile creation failed, need to fix account)
+  const hasErrorParam = request.nextUrl.searchParams.has('error');
+  if (user && (pathname === "/login" || pathname === "/signup") && !hasErrorParam) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
