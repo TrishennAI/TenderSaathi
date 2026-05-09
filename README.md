@@ -72,8 +72,8 @@ npm install
 cp .env.example .env.local
 
 # Edit .env.local with your Supabase credentials
-# TS_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
-# TS_SUPABASE_ANON_KEY=YOUR-PUBLIC-ANON-KEY
+# NEXT_PUBLIC_TS_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+# NEXT_PUBLIC_TS_SUPABASE_ANON_KEY=YOUR-PUBLIC-ANON-KEY
 ```
 
 ### Database Setup
@@ -121,11 +121,11 @@ TenderSaathi/
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `TS_SUPABASE_URL` | Supabase project URL | ✅ |
-| `TS_SUPABASE_ANON_KEY` | Supabase anon key | ✅ |
-| `TS_AGENT_WHATSAPP_NUMBER` | Agent WhatsApp (E.164) | ✅ |
-| `TS_PAYMENT_AMOUNT` | Payment amount in INR | ⚠️ |
-| `TS_PAYMENT_QR_IMAGE_PATH` | UPI QR image path | ⚠️ |
+| `NEXT_PUBLIC_TS_SUPABASE_URL` | Supabase project URL | ✅ |
+| `NEXT_PUBLIC_TS_SUPABASE_ANON_KEY` | Supabase anon key | ✅ |
+| `NEXT_PUBLIC_TS_AGENT_WHATSAPP_NUMBER` | Agent WhatsApp (E.164) | ✅ |
+| `NEXT_PUBLIC_TS_PAYMENT_AMOUNT` | Payment amount in INR | ⚠️ |
+| `NEXT_PUBLIC_TS_PAYMENT_QR_IMAGE_PATH` | UPI QR image path | ⚠️ |
 
 
 ---
