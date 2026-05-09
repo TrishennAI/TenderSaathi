@@ -53,9 +53,6 @@ export async function requireUser() {
         } else {
           console.log("Background profile creation succeeded for user:", user.id);
         }
-      })
-      .catch(err => {
-        console.error("Background profile creation error:", err);
       });
   }
   
