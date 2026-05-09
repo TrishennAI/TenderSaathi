@@ -42,8 +42,19 @@ export function LoginForm({ labels }: { labels: Labels }) {
         setError(err.message || labels.genericError);
         return;
       }
+      
+      // Try client-side navigation first
       router.replace(next);
       router.refresh();
+      
+      // Fallback: if client-side navigation doesn't work, do a full page reload
+      // This handles cases where the router might fail silently
+      setTimeout(() => {
+        // Check if we're still on the login page after 1 second
+        if (window.location.pathname === "/login") {
+          window.location.href = next;
+        }
+      }, 1000);
     });
   }
 
