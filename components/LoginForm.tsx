@@ -60,12 +60,13 @@ export function LoginForm({ labels }: { labels: Labels }) {
 
   return (
     <div className="mt-6 flex flex-col gap-4">
-      <GoogleSignInButton
+      {/* Google Sign-In disabled for now */}
+      {/* <GoogleSignInButton
         next={next}
         label={labels.google}
         errorLabel={labels.supabaseMissing}
       />
-      <AuthDivider label={labels.divider} />
+      <AuthDivider label={labels.divider} /> */}
       <form action={handleSubmit} className="flex flex-col gap-4">
       <Field label={labels.email} name="email" type="email" autoComplete="email" required />
       <Field label={labels.password} name="password" type="password" autoComplete="current-password" required />

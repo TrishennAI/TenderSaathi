@@ -81,12 +81,13 @@ export function SignupForm({ labels }: { labels: Labels }) {
 
   return (
     <div className="mt-6 flex flex-col gap-4">
-      <GoogleSignInButton
+      {/* Google Sign-In disabled for now */}
+      {/* <GoogleSignInButton
         next={next}
         label={labels.google}
         errorLabel={labels.supabaseMissing}
       />
-      <AuthDivider label={labels.divider} />
+      <AuthDivider label={labels.divider} /> */}
       {oauthFailed && (
         <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {labels.oauthError}
