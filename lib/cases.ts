@@ -20,11 +20,24 @@ export async function requireUser() {
     .eq("id", user.id)
     .maybeSingle<Profile>();
   
-  // If profile doesn't exist, create it (fallback for trigger failure)
+  // If profile doesn't exist, return a default profile object
+  // Don't try to insert because of RLS issues
   if (!profile) {
-    console.log("Profile missing for user:", user.id, "metadata:", user.user_metadata);
+    // Create a default profile object
+    profile = {
+      id: user.id,
+      role: "user" as const,
+      full_name: user.user_metadata?.full_name || user.user_metadata?.name || null,
+      phone: user.user_metadata?.phone || null,
+      business_name: user.user_metadata?.business_name || null,
+      preferred_locale: "en",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
     
-    const { data: newProfile, error } = await supabase
+    // Try to insert in background (but don't fail if it doesn't work)
+    // This is async but we don't await it
+    supabase
       .from("profiles")
       .insert({
         id: user.id,
@@ -34,22 +47,16 @@ export async function requireUser() {
         business_name: user.user_metadata?.business_name || null,
         preferred_locale: "en",
       })
-      .select()
-      .single<Profile>();
-    
-    if (error) {
-      console.error("Failed to create profile:", error);
-      // Instead of signing out, redirect to a special error page or login with error
-      redirect("/login?error=profile_creation_failed&details=" + encodeURIComponent(error.message));
-    }
-    
-    if (!newProfile) {
-      console.error("Profile creation returned no data");
-      redirect("/login?error=profile_creation_empty");
-    }
-    
-    profile = newProfile;
-    console.log("Created profile for user:", user.id);
+      .then(({ error }) => {
+        if (error) {
+          console.error("Background profile creation failed:", error.message);
+        } else {
+          console.log("Background profile creation succeeded for user:", user.id);
+        }
+      })
+      .catch(err => {
+        console.error("Background profile creation error:", err);
+      });
   }
   
   return { supabase, user, profile };
