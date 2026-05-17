@@ -55,8 +55,8 @@ Set **`NEXT_PUBLIC_AGENT_WHATSAPP_FALLBACK`** to your support WhatsApp in **E.16
 
 Migrations are under `supabase/migrations/`. Apply them to your Supabase project (hosted or local):
 
-- **Supabase Dashboard:** SQL Editor → run the contents of `0001_init.sql`, then `0002_seed_helpers.sql`, then `0003_oauth_profile.sql` (and any later files) in order.
-- **Supabase CLI:** from `gem-portal`, follow [local development](https://supabase.com/docs/guides/cli/local-development) or `db push` workflows your team uses.
+- **Supabase Dashboard:** SQL Editor → run each file **in numeric order** (`0001_…` through the latest).
+- **Supabase CLI:** from the repo root, follow [local development](https://supabase.com/docs/guides/cli/local-development) or `supabase link` + `supabase db push` (see [OPERATIONS.md](./OPERATIONS.md) for details and staging/production notes).
 
 See [PRODUCT.md](./PRODUCT.md) for roles, RLS, and agent seeding notes.
 

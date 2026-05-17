@@ -23,6 +23,9 @@ export default async function LoginPage() {
               oauthError: t.auth.login.oauthError,
               genericError: t.common.errors.generic,
               supabaseMissing: t.common.errors.supabaseMissing,
+              forgotPassword: t.auth.login.forgotPassword,
+              showPassword: t.auth.passwordField.show,
+              hidePassword: t.auth.passwordField.hide,
             }}
           />
           <p className="mt-6 text-sm text-muted">

@@ -27,6 +27,7 @@
 
 - **[Setup Guide](./docs/SETUP.md)** — OS-specific setup for macOS, Windows, Linux, WSL2
 - **[Product Overview](./docs/PRODUCT.md)** — What's built, routes, data model, features
+- **[Operations & staging](./docs/OPERATIONS.md)** — Migrations, Vercel/staging, case refs, troubleshooting
 - **[UI Specification](./docs/UI.md)** — Design system, i18n, theme, animations
 - **[Build Guide](./docs/BUILD-FIRST.md)** — Build-first approach and deployment checklist
 - **[Project Plan](./docs/PLAN.md)** — Roadmap and deployment strategy

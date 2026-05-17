@@ -44,7 +44,9 @@
     "timeline": "Timeline",
     "noDocuments": "No documents listed yet.",
     "noWhatsapp": "No agent WhatsApp number configured.",
-    "paymentStatus": "Status"
+    "paymentStatus": "Status",
+    "reference": "Reference",
+    "serviceFee": "Service fee for this case: {amount}"
   },
   "paymentRecordStatus": {
     "awaiting_payment": "Awaiting payment proof",

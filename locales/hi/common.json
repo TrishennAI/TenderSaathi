@@ -31,5 +31,6 @@
   "errors": {
     "generic": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
     "supabaseMissing": "Supabase अभी कॉन्फ़िगर नहीं है। अपने एनवायरनमेंट में NEXT_PUBLIC_SUPABASE_URL और NEXT_PUBLIC_SUPABASE_ANON_KEY जोड़ें।"
-  }
+  },
+  "loading": "लोड हो रहा है…"
 }

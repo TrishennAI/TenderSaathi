@@ -44,7 +44,9 @@
     "timeline": "टाइमलाइन",
     "noDocuments": "अभी कोई दस्तावेज़ सूचीबद्ध नहीं है।",
     "noWhatsapp": "एजेंट का WhatsApp नंबर कॉन्फ़िगर नहीं है।",
-    "paymentStatus": "स्थिति"
+    "paymentStatus": "स्थिति",
+    "reference": "संदर्भ",
+    "serviceFee": "इस केस का सेवा शुल्क: {amount}"
   },
   "paymentRecordStatus": {
     "awaiting_payment": "भुगतान प्रमाण की प्रतीक्षा",

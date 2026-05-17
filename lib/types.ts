@@ -50,6 +50,8 @@ export type Agent = {
 
 export type Case = {
   id: string;
+  /** Human-readable ref for WhatsApp / support (e.g. TS-000001). */
+  reference_code: string;
   user_id: string;
   agent_id: string | null;
   status: CaseStatus;
