@@ -60,6 +60,7 @@ export default async function DashboardPage() {
                     </div>
                     {c.summary && <p className="mt-2 line-clamp-2 text-sm text-muted">{c.summary}</p>}
                     <p className="mt-4 text-xs text-muted-2">
+                      {c.reference_code} ·{" "}
                       {new Date(c.created_at).toLocaleString(locale === "hi" ? "hi-IN" : "en-IN")}
                     </p>
                   </Link>

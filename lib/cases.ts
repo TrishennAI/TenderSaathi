@@ -70,17 +70,20 @@ export async function requireRole(role: UserRole) {
 export function buildWhatsappUrl({
   phoneE164,
   caseId,
+  referenceCode,
   caseTitle,
   message,
 }: {
   phoneE164: string;
   caseId?: string;
+  referenceCode?: string;
   caseTitle?: string;
   message?: string;
 }) {
   const digits = phoneE164.replace(/[^\d]/g, "");
+  const ref = referenceCode ?? caseId ?? "";
   const text =
     message ??
-    `Hi, this is regarding case ${caseTitle ?? ""} (ref: ${caseId ?? ""}).`.trim();
+    `Hi, this is regarding case ${caseTitle ?? ""} (ref: ${ref}).`.trim();
   return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
 }

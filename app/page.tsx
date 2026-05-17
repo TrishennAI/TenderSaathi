@@ -1,8 +1,14 @@
 import { AppHeader } from "@/components/AppHeader";
 import { HomeLanding } from "@/components/home/HomeLanding";
+import { env, isSupabaseConfigured } from "@/lib/env";
 import { getDictionary } from "@/lib/i18n";
+import type { Locale } from "@/lib/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/env";
+
+function formatFeeAmount(amount: number, locale: Locale): string {
+  const tag = locale === "hi" ? "hi-IN" : "en-IN";
+  return new Intl.NumberFormat(tag, { maximumFractionDigits: 0 }).format(amount);
+}
 
 export default async function Home() {
   const { locale, t } = await getDictionary();
@@ -24,6 +30,9 @@ export default async function Home() {
     }
   }
 
+  const amountLabel = formatFeeAmount(env.paymentAmount, locale);
+  const pricingLine = t.landing.pricingLine.replace("{amount}", amountLabel);
+
   return (
     <>
       <AppHeader locale={locale} t={t} authed={authed} role={role} />
@@ -37,6 +46,7 @@ export default async function Home() {
         }}
         authed={authed}
         role={role}
+        pricingLine={pricingLine}
       />
     </>
   );

@@ -18,7 +18,7 @@ async function createCaseAction(formData: FormData) {
   const { data, error } = await supabase
     .from("cases")
     .insert({ user_id: profile.id, title, summary: summary || null })
-    .select("id")
+    .select("id, reference_code")
     .single();
   
   if (error || !data) {
@@ -32,7 +32,7 @@ async function createCaseAction(formData: FormData) {
 
 ${summary ? `*Details:* ${summary}` : ''}
 
-*Case ID:* ${data.id}
+*Case ref:* ${data.reference_code}
 
 I'm looking forward to working with you!`;
   

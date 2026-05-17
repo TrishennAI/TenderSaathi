@@ -17,12 +17,14 @@ export function HomeLanding({
   nav,
   authed,
   role,
+  pricingLine,
 }: {
   locale: Locale;
   landing: Landing;
   nav: { signup: string; login: string; dashboard: string };
   authed: boolean;
   role?: "user" | "agent";
+  pricingLine: string;
 }) {
   const reduce = useReducedMotion();
 
@@ -147,6 +149,14 @@ export function HomeLanding({
               className="mx-auto mt-6 max-w-2xl text-lg text-muted md:text-xl md:leading-relaxed"
             >
               {landing.subhead}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...spring, delay: 0.22 }}
+              className="mx-auto mt-5 max-w-xl rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-base font-medium text-foreground md:text-lg"
+            >
+              {pricingLine}
             </motion.p>
 
             <motion.div

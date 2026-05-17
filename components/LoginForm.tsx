@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import { AuthDivider, GoogleSignInButton } from "@/components/GoogleSignInButton";
+import { PasswordFieldWithToggle } from "@/components/PasswordFieldWithToggle";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/env";
 
@@ -16,6 +17,9 @@ type Labels = {
   oauthError: string;
   genericError: string;
   supabaseMissing: string;
+  forgotPassword: string;
+  showPassword: string;
+  hidePassword: string;
 };
 
 export function LoginForm({ labels }: { labels: Labels }) {
@@ -68,8 +72,23 @@ export function LoginForm({ labels }: { labels: Labels }) {
       />
       <AuthDivider label={labels.divider} /> */}
       <form action={handleSubmit} className="flex flex-col gap-4">
-      <Field label={labels.email} name="email" type="email" autoComplete="email" required />
-      <Field label={labels.password} name="password" type="password" autoComplete="current-password" required />
+        <Field label={labels.email} name="email" type="email" autoComplete="email" required />
+        <PasswordFieldWithToggle
+          label={labels.password}
+          name="password"
+          autoComplete="current-password"
+          required
+          showPasswordLabel={labels.showPassword}
+          hidePasswordLabel={labels.hidePassword}
+          labelEnd={
+            <Link
+              href="/forgot-password"
+              className="shrink-0 text-sm font-semibold text-primary underline-offset-2 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {labels.forgotPassword}
+            </Link>
+          }
+        />
       {oauthFailed && (
         <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {labels.oauthError}

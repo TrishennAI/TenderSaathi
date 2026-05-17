@@ -8,10 +8,11 @@ const PUBLIC_PATHS = [
   "/",
   "/login",
   "/signup",
+  "/forgot-password",
   "/auth/callback",
 ];
 
-const USER_PATHS = ["/dashboard", "/cases"];
+const USER_PATHS = ["/dashboard", "/cases", "/auth/update-password"];
 const AGENT_PATHS = ["/agent"];
 
 function isPublic(pathname: string) {

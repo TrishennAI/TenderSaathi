@@ -99,6 +99,7 @@ function Section({
                 </div>
                 {c.summary && <p className="mt-2 line-clamp-2 text-base text-muted">{c.summary}</p>}
                 <p className="mt-3 text-sm text-muted-2">
+                  {c.reference_code} ·{" "}
                   {new Date(c.created_at).toLocaleString(locale === "hi" ? "hi-IN" : "en-IN")}
                 </p>
               </Link>

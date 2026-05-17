@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { AppHeader } from "@/components/AppHeader";
 import { StatusPill } from "@/components/StatusPill";
 import { env } from "@/lib/env";
+import { formatInrWhole } from "@/lib/format-inr";
 import { getDictionary } from "@/lib/i18n";
 import { requireUser } from "@/lib/cases";
 import type { Case } from "@/lib/types";
@@ -37,7 +38,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
 
 ${caseRow.summary ? `*Details:* ${caseRow.summary}` : ''}
 
-*Case ID:* ${caseRow.id}
+*Case ref:* ${caseRow.reference_code}
 
 Please update me on the latest status of this case.`;
 
@@ -71,10 +72,21 @@ Please update me on the latest status of this case.`;
           {caseRow.summary && (
             <p className="mt-4 whitespace-pre-wrap text-base text-muted">{caseRow.summary}</p>
           )}
-          
-          <div className="mt-4 flex items-center gap-3 text-sm text-muted-2">
-            <span>Case ID: {caseRow.id}</span>
-            <span>•</span>
+
+          <p className="mt-4 text-base font-semibold text-foreground">
+            {t.dashboard.case.serviceFee.replace(
+              "{amount}",
+              formatInrWhole(caseRow.amount_inr, locale),
+            )}
+          </p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-2">
+            <span>
+              {t.dashboard.case.reference}: {caseRow.reference_code}
+            </span>
+            <span className="hidden sm:inline" aria-hidden>
+              •
+            </span>
             <span>{new Date(caseRow.created_at).toLocaleString(locale === "hi" ? "hi-IN" : "en-IN")}</span>
           </div>
 
