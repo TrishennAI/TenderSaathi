@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useId, useState, useTransition } from "react";
 
 import { PasswordFieldWithToggle } from "@/components/PasswordFieldWithToggle";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -29,6 +29,9 @@ export function LoginForm({ labels }: { labels: Labels }) {
   const oauthFailed = searchParams.get("error") === "oauth";
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  /** Controlled so the value survives form/action re-renders on failed sign-in. */
+  const [email, setEmail] = useState("");
+  const emailId = useId();
 
   function handleSubmit(form: FormData) {
     setError(null);
@@ -39,7 +42,7 @@ export function LoginForm({ labels }: { labels: Labels }) {
     startTransition(async () => {
       const supabase = createSupabaseBrowserClient();
       const { error: err } = await supabase.auth.signInWithPassword({
-        email: String(form.get("email") ?? ""),
+        email: email.trim(),
         password: String(form.get("password") ?? ""),
       });
       if (err) {
@@ -72,7 +75,21 @@ export function LoginForm({ labels }: { labels: Labels }) {
       />
       <AuthDivider label={labels.divider} /> */}
       <form action={handleSubmit} className="flex flex-col gap-4">
-        <Field label={labels.email} name="email" type="email" autoComplete="email" required />
+        <div className="flex flex-col gap-1 text-sm">
+          <label htmlFor={emailId} className="font-medium">
+            {labels.email}
+          </label>
+          <input
+            id={emailId}
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="h-11 rounded-md border border-border bg-background px-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
+          />
+        </div>
         <PasswordFieldWithToggle
           label={labels.password}
           name="password"
@@ -108,32 +125,5 @@ export function LoginForm({ labels }: { labels: Labels }) {
       </button>
       </form>
     </div>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  required,
-  autoComplete,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-  autoComplete?: string;
-}) {
-  return (
-    <label className="flex flex-col gap-1 text-sm">
-      <span className="font-medium">{label}</span>
-      <input
-        name={name}
-        type={type}
-        required={required}
-        autoComplete={autoComplete}
-        className="h-11 rounded-md border border-border bg-background px-3 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
-      />
-    </label>
   );
 }
