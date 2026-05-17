@@ -30,6 +30,8 @@ export default async function SignupPage() {
               hidePassword: t.auth.passwordField.hide,
               submit: t.auth.signup.submit,
               oauthError: t.auth.signup.oauthError,
+              confirmEmailSent: t.auth.signup.confirmEmailSent,
+              emailAlreadyRegistered: t.auth.signup.emailAlreadyRegistered,
               genericError: t.common.errors.generic,
               supabaseMissing: t.common.errors.supabaseMissing,
             }}

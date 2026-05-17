@@ -23,6 +23,10 @@ type Labels = {
   hidePassword: string;
   submit: string;
   oauthError: string;
+  /** Shown when email confirmation is required for a new signup. */
+  confirmEmailSent: string;
+  /** Duplicate email: GoTrue returns success with empty identities (anti-enumeration). */
+  emailAlreadyRegistered: string;
   genericError: string;
   supabaseMissing: string;
 };
@@ -30,6 +34,15 @@ type Labels = {
 /** Exactly 10 digits (signup field accepts digits only). */
 function isTenDigitMobile(value: string): boolean {
   return /^\d{10}$/.test(value);
+}
+
+/**
+ * With "Confirm email" enabled, GoTrue does not return an error for duplicate signups
+ * (anti-enumeration). The user object is present but `identities` is empty and no email is sent.
+ * @see https://github.com/supabase/auth-js/issues/513
+ */
+function isDuplicateSignupMaskedUser(user: { identities?: unknown[] } | null): boolean {
+  return !!user && Array.isArray(user.identities) && user.identities.length === 0;
 }
 
 export function SignupForm({ labels }: { labels: Labels }) {
@@ -98,6 +111,11 @@ export function SignupForm({ labels }: { labels: Labels }) {
         return;
       }
 
+      if (isDuplicateSignupMaskedUser(data.user)) {
+        setError(labels.emailAlreadyRegistered);
+        return;
+      }
+
       if (data.session) {
         if (businessName) {
           await supabase
@@ -108,7 +126,7 @@ export function SignupForm({ labels }: { labels: Labels }) {
         router.replace("/dashboard");
         router.refresh();
       } else {
-        setInfo("Check your inbox to confirm your email, then sign in.");
+        setInfo(labels.confirmEmailSent);
       }
     });
   }

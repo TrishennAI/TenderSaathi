@@ -21,6 +21,8 @@ This file records what is **actually built** in the repo (vs. the architecture p
 | `/` | Public | Product landing with hero + 3-step explainer |
 | `/login` | Public | Email + password and **Continue with Google** |
 | `/signup` | Public | Email + password signup with name/phone/business; **Continue with Google** |
+| `/forgot-password` | Public | Request Supabase password reset email |
+| `/auth/update-password` | Public | Set new password after recovery link (session / hash handling per Supabase) |
 | `/auth/callback` | Public | OAuth PKCE callback (`exchangeCodeForSession`); not linked in the UI |
 | `/dashboard` | User | Lists cases + “New case” CTA |
 | `/cases/new` | User | Create case (title + summary) |
@@ -34,11 +36,11 @@ This file records what is **actually built** in the repo (vs. the architecture p
 
 ## Data model
 
-SQL: [`0001_init.sql`](../supabase/migrations/0001_init.sql), [`0002_seed_helpers.sql`](../supabase/migrations/0002_seed_helpers.sql), [`0003_oauth_profile.sql`](../supabase/migrations/0003_oauth_profile.sql) (OAuth profile mapping for `handle_new_user`).
+SQL: [`0001_init.sql`](../supabase/migrations/0001_init.sql) through later numbered files in [`supabase/migrations/`](../supabase/migrations/) (OAuth profile mapping for `handle_new_user` in early migrations; **`0006_case_reference_code.sql`** adds `reference_code`).
 
 - `profiles(id, role, full_name, phone, business_name, preferred_locale, ...)` — bootstrapped from auth.users by trigger.
 - `agents(id, user_id, display_name, whatsapp_phone_e164, is_active)` — **single active row** in MVP.
-- `cases(id, user_id, agent_id, status, title, summary, document_requirements jsonb, agent_notes, final_notes, amount_inr default 799)` with Postgres `case_status` enum.
+- `cases(id, reference_code, user_id, agent_id, status, title, summary, document_requirements jsonb, agent_notes, final_notes, amount_inr default 799)` with Postgres `case_status` enum. **`reference_code`** is a unique human-facing ref (e.g. `TS-000001`) for WhatsApp/support; **`id`** remains UUID for URLs and FKs.
 - `payments(id, case_id unique, amount_inr, status, verified_by, verified_at, rejection_reason)` with Postgres `payment_status` enum.
 
 Triggers:
@@ -46,6 +48,7 @@ Triggers:
 - `handle_new_user` → inserts a profile on `auth.users` insert (email signup metadata plus OAuth: maps `full_name` / `name`, optional `phone` / `business_name`; only promotes to `role = agent` when metadata explicitly says `agent`).
 - `assign_default_agent` → fills `agent_id` on case insert with the single active agent and bumps status to `agent_assigned`.
 - `ensure_payment_for_case` → inserts a `payments` row when status transitions to `awaiting_payment`.
+- `set_case_reference_code` (see `0006`) → sets `reference_code` on case insert when not provided.
 - `set_updated_at` → keeps `updated_at` columns fresh.
 
 RLS:
@@ -60,6 +63,7 @@ RLS:
 ## Auth
 
 - **Email + password** via Supabase Auth on `/login` and `/signup`.
+- **Signup duplicate email:** With **Confirm email** enabled in Supabase, `signUp` may return **no error** for an already-registered address (anti-enumeration). The client detects an **empty `identities`** array on the returned user and shows **email already registered** instead of implying a confirmation email was sent (see [OPERATIONS.md](./OPERATIONS.md)).
 - **Google** via `signInWithOAuth` → Supabase → redirect to `/auth/callback` → session cookies, then redirect to `/dashboard` (or `next` query param). Configure the provider and redirect allowlist in Supabase; see [SETUP.md § Google sign-in](./SETUP.md#3b-google-sign-in-optional).
 - Profile is created via the `handle_new_user` trigger from `raw_user_meta_data` (email `signUp` options and Google user metadata).
 - Agent profile must still be **manually flipped** to `role = 'agent'` and a row inserted into `agents` (see [`0002_seed_helpers.sql`](../supabase/migrations/0002_seed_helpers.sql)); Google (or any) sign-in does **not** auto-grant agent.
@@ -69,7 +73,7 @@ RLS:
 ## WhatsApp
 
 - All conversation, documents, and payment screenshots are sent over WhatsApp.
-- Case detail shows an **Open WhatsApp** CTA built from `agents.whatsapp_phone_e164` (or `NEXT_PUBLIC_AGENT_WHATSAPP_FALLBACK` if no agent yet) with a prefilled message that includes case title and id.
+- Case detail shows an **Open WhatsApp** CTA built from `agents.whatsapp_phone_e164` (or `NEXT_PUBLIC_AGENT_WHATSAPP_FALLBACK` if no agent yet) with a prefilled message that includes case title and **`reference_code`** (not the UUID). New-case flow redirects to WhatsApp with the same pattern after insert.
 
 ---
 
@@ -117,7 +121,7 @@ RLS:
 ## What still needs you (per [`BUILD-FIRST.md`](./BUILD-FIRST.md))
 
 1. **Supabase project** — create one, paste keys into Vercel env vars (and `.env.local` for development).
-2. **Run** migrations in order: [`0001_init.sql`](../supabase/migrations/0001_init.sql), [`0002_seed_helpers.sql`](../supabase/migrations/0002_seed_helpers.sql), [`0003_oauth_profile.sql`](../supabase/migrations/0003_oauth_profile.sql).
+2. **Run** migrations in numeric order under [`supabase/migrations/`](../supabase/migrations/) (through `0006_case_reference_code.sql` or whatever is latest). See [OPERATIONS.md](./OPERATIONS.md) for Dashboard vs CLI.
 3. **Create the agent user** in Supabase Auth, flip `profiles.role = 'agent'` for that user, and insert a row into `agents` (helpers in [`0002_seed_helpers.sql`](../supabase/migrations/0002_seed_helpers.sql)).
 4. **Replace** `public/upi-qr.svg` with the real UPI QR (PNG/JPG/SVG; update `NEXT_PUBLIC_PAYMENT_QR_PATH` if you change the filename).
 5. **Set** `NEXT_PUBLIC_AGENT_WHATSAPP_FALLBACK` (E.164) for the case where the agent row isn’t seeded yet.
